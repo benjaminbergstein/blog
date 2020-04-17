@@ -1,0 +1,22 @@
+- quantity: "1"
+  unit: pound
+  name: pinto beans
+- quantity: "3-4"
+  unit: slices
+  name: bacon
+- quantity: "1"
+  unit: medium
+  name: shallot
+- quantity: "2"
+  name: bay leaves
+- quantity: "2"
+  unit: teaspoons
+  name: cumin
+- quantity: "1"
+  unit: teaspoon
+  name: chili powder
+- quantity: "3/4"
+  unit: cup
+  name: red wine
+- name: salt
+  unit: to taste

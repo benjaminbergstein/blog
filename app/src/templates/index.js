@@ -44,16 +44,17 @@ const BlogIndex = ({ data, location }) => {
   )
 }
 
-export default BlogIndex
-
 export const pageQuery = graphql`
-  query {
+  query BlogIndex($statuses: [String]!) {
     site {
       siteMetadata {
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(
+      filter: { frontmatter: { status: { in: $statuses } } },
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       edges {
         node {
           excerpt
@@ -70,3 +71,5 @@ export const pageQuery = graphql`
     }
   }
 `
+
+export default BlogIndex

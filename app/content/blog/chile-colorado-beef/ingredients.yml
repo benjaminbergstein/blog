@@ -1,0 +1,31 @@
+- quantity: "4"
+  name: chiles de arbol
+- quantity: "3"
+  name: ancho chiles
+- quantity: "3"
+  name: new mexico chiles
+- quantity: "1.75"
+  unit: lbs
+  name: beef chuck
+- quantity: "1"
+  unit: teaspoon
+  name: non-chicken "Better than Boullion"
+- quantity: "1"
+  unit: teaspoon
+  name: cumin
+- quantity: "1"
+  name: small white onion
+  prep: chopped
+- quantity: "4"
+  unit: cloves
+  name: garlic
+  prep: minced
+- quantity: "1"
+  name: lime
+  prep: juiced
+- quantity: "2"
+  name: whole peeled tomatos
+  prep: pureed
+  note: "or: substitute any tomato product"
+- name: any leftover chile paste you have
+  note: "pictured here: chipotle chiles in adobo sauce"

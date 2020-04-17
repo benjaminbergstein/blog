@@ -6,9 +6,17 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
+const formatQuantity = ({ quantity, unit }) => {
+  if (quantity && unit) return `${quantity} ${unit} `
+  if (quantity && !unit) return `${quantity} `
+  if (!quantity && unit) return `${unit} `
+  if (!quantity && !unit) return ""
+}
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
+  const intro = data.intro
   const siteTitle = data.site.siteMetadata.title
+  const ingredients = (data.ingredients || {}).childrenIngredientsYaml
   const { previous, next } = pageContext
 
   return (
@@ -37,6 +45,24 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             {post.frontmatter.date}
           </p>
         </header>
+
+        {intro && <section dangerouslySetInnerHTML={{ __html: intro.html }} />}
+        {ingredients && <>
+          <h2>Ingredients</h2>
+          <section>
+            <ul>
+            {ingredients.map(({ name, unit, quantity, note, prep }) => (
+              <li>
+                {formatQuantity({ quantity, unit })}{name}{prep && `, ${prep}`}
+
+                {note && <p>{note}</p>}
+              </li>
+            ))}
+            </ul>
+          </section>
+          </>}
+
+        {post.frontmatter.type !== 'engineering' && <h2>Procedure</h2>}
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
         <hr
           style={{
@@ -87,14 +113,39 @@ export const pageQuery = graphql`
         title
       }
     }
+    intro: file(
+      absolutePath: {
+        regex: $slug
+      },
+      name: { eq: "intro" }
+    ) {
+      childMarkdownRemark {
+        html
+      }
+    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
       html
       frontmatter {
         title
+        type
         date(formatString: "MMMM DD, YYYY")
         description
+      }
+    }
+    ingredients: file(
+      absolutePath: {
+        regex: $slug
+      },
+      name: { eq: "ingredients" }
+    ) {
+      childrenIngredientsYaml {
+        name
+        unit
+        note
+        quantity
+        prep
       }
     }
   }
