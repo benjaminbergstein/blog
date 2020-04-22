@@ -1,8 +1,8 @@
 ---
-title: Docker development workflow with Make
+title: Let's Dockerize! Docker development workflow with Make and Node.js
 date: "2020-04-16T22:12:03.284Z"
 description: "Learn to dockerize and develop a Next.js application in this step-by-step tutorial."
-type: engineering
+category: engineering
 status: draft
 ---
 
@@ -159,16 +159,16 @@ docker-compose -p ${PROJECT} \
 endef
 
 build:
-  docker build ../${SERVICE} -t ${DOCKER_IMAGE}
+	docker build ../${SERVICE} -t ${DOCKER_IMAGE}
 
 start:
-   ${COMPOSE_CMD} up -d ${SERVICE}
+	${COMPOSE_CMD} up -d ${SERVICE}
 
 logs:
-   ${COMPOSE_CMD} logs -f ${SERVICE}
+	${COMPOSE_CMD} logs -f ${SERVICE}
 
 stop:
-    ${COMPOSE_CMD} down --remove-orphans
+	${COMPOSE_CMD} down --remove-orphans
 ```
 
 To use them, run the following from the root of your project:
@@ -198,9 +198,39 @@ And, voila! Our application is running in a docker container.
 
 ### Add a console target 
 
-Because we mounted our codebase as a volume in the `docker-compose.yml` file, we can edit the code of our application as if it was not dockerized. But how do we access a console for debugging or running one-off commands?
+Because we mounted our codebase as a volume in the `docker-compose.yml` file, we 
+can edit the code of our application as if it was not dockerized. But how do we 
+access a console for debugging or running one-off commands?
 
-We can modi
+Let's add a simple make target for this purpose:
+
+```diff
+diff --git a/docker/Makefile b/docker/Makefile
+index 1a40760..0aee168 100644
+--- a/docker/Makefile
++++ b/docker/Makefile
+@@ -15,6 +15,9 @@ build:
+ start:
+        ${COMPOSE_CMD} up -d ${SERVICE}
+
++console:
++       ${COMPOSE_CMD} exec ${SERVICE} /bin/bash
++
+ logs:
+        ${COMPOSE_CMD} logs -f ${SERVICE}
+```
+
+Now let's run this target:
+
+```bash
+$ make -C docker console
+> make: Entering directory '/root/next-project/docker'
+> docker-compose -p next-project --project-directory=.. -f ./docker-compose.yml exec app /bin/bash
+root@d38a76fb7137:/app#
+```
+
+We can now run commands against a shell within our node.js application's docker container.
+
 ## Conclusion
 
 Dockerizing your application is just the beginning of the benefits of docker. We can also use docker to start additional services, such as relational databases, in-memory datastores, and even other applications required by our front-end Next.js application.

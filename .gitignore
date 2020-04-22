@@ -2,3 +2,5 @@ server/data
 server/node_modules
 **/*.swp
 **/*.swo
+data/photos
+app/content/assets/photos

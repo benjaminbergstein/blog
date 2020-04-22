@@ -46,7 +46,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           </p>
         </header>
 
-        {intro && <section dangerouslySetInnerHTML={{ __html: intro.html }} />}
+        {intro && <section dangerouslySetInnerHTML={{ __html: intro.childMarkdownRemark.html }} />}
         {ingredients && <>
           <h2>Ingredients</h2>
           <section>
@@ -62,7 +62,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           </section>
           </>}
 
-        {post.frontmatter.type !== 'engineering' && <h2>Procedure</h2>}
+        {post.frontmatter.category !== 'engineering' && <h2>Procedure</h2>}
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
         <hr
           style={{
@@ -129,7 +129,7 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        type
+        category
         date(formatString: "MMMM DD, YYYY")
         description
       }

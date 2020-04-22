@@ -2,8 +2,9 @@ const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 const PAGES_QUERY = `
-{
+query PagesQuery($statuses: [String]!) {
   allMarkdownRemark(
+    filter: { frontmatter: { status: { in: $statuses } } }
     sort: { fields: [frontmatter___date], order: DESC },
     limit: 1000
   ) {
@@ -14,11 +15,14 @@ const PAGES_QUERY = `
         }
         frontmatter {
           title
+          category
         }
       }
     }
   }
 }`
+
+const INDEXED_STATUSES = process.env.NODE_ENV === 'production' ? ["published"] : ["draft", "published"]
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -28,12 +32,14 @@ exports.createPages = async ({ graphql, actions }) => {
     path: '/',
     component: blogIndex,
     context: {
-      statuses: ["draft", "published"],
+      statuses: INDEXED_STATUSES,
     },
   })
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const result = await graphql(PAGES_QUERY)
+  const result = await graphql(PAGES_QUERY, {
+    statuses: INDEXED_STATUSES,
+  })
 
   if (result.errors) {
     throw result.errors
@@ -45,6 +51,7 @@ exports.createPages = async ({ graphql, actions }) => {
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
+    const { category } = post.node.frontmatter
 
     createPage({
       path: post.node.fields.slug,
@@ -55,6 +62,12 @@ exports.createPages = async ({ graphql, actions }) => {
         next,
       },
     })
+  })
+
+  const gallery = path.resolve(`./src/templates/gallery.js`)
+  createPage({
+    path: '/gallery',
+    component: gallery,
   })
 }
 
