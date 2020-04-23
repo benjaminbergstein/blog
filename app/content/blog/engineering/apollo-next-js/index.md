@@ -1,7 +1,7 @@
 ---
-title: Let's Dockerize! Connect a Redis server to your node.js app
+title: Let's Dockerize! Connect Next.js app to Apollo GraphQL
 date: "2020-04-17T22:12:03.284Z"
-description: "In this tutorial, we'll learn how to store data in a docker-based Redis-server using docker"
+description: "In this tutorial, we'll learn how to connect a Next.js application to apollo"
 category: engineering
 status: draft
 ---
@@ -14,12 +14,13 @@ status: draft
   </em>
 </p>
 
-[Redis](https://redis.io/) is a in-memory data store, used most commonly for
-caching and message queuing. In this tutorial, let's set up a dockerized redis
-server and access data from a node.js application.
+[Apollo](https://www.apollographql.com/) is a GraphQL ecosystem that offers
+an array of libraries for GraphQL client and server use cases.  In this tutorial,
+let's set up a GraphQL connection between a Next.js application and a GraphQL
+server.
 
 We'll use the project produced by the <a href="/engineering/docker-development-with-make/">previous post</a>
-as a jumping-off point. You may want to set that up before following along.
+as a jumping-off point. However, instead of the basic template, use the `with-apollo` template instead.
 
 ## Steps
 
