@@ -1,5 +1,6 @@
 export PROJECT=blog
 export ENVIRONMENT ?= development
+export NODE_ENV ?= ${ENVIRONMENT}
 export SERVICE ?= app
 export PORT ?= 14000
 
