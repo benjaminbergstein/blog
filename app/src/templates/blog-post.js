@@ -4,7 +4,7 @@ import { Link, graphql } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm, scale } from "../utils/typography"
+import typography, { rhythm, scale } from "../utils/typography"
 
 const formatQuantity = ({ quantity, unit }) => {
   if (quantity && unit) return `${quantity} ${unit} `
@@ -24,6 +24,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
+        meta={[{ name: 'viewport', content: 'width=device-width, initial-scale=1' }]}
       />
       <article>
         <header>
@@ -39,7 +40,9 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             style={{
               ...scale(-1 / 5),
               display: `block`,
+              marginTop: rhythm(0.25),
               marginBottom: rhythm(1),
+              fontVariant: 'italic',
             }}
           >
             {post.frontmatter.date}
