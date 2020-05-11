@@ -3,10 +3,14 @@ version: '3.7'
 services:
   app:
     image: ${DOCKER_BASE}-app:latest
-    ports:
-      - 14000:9000
     environment:
       - NODE_ENV
+    networks:
+      - haproxy-controller_haproxy-controller
+
+networks:
+  haproxy-controller_haproxy-controller:
+    external: true
 
 volumes:
   node_modules:

@@ -42,6 +42,12 @@ console:
 attach:
 	${DOCKER_COMPOSE} exec ${SERVICE} /bin/bash
 
+pull:
+	git pull --rebase origin master
+
+release: ENVIRONMENT=production
+release: pull stop build start
+
 psql:
 	psql -h localhost -U ${POSTGRES_USER} ${POSTGRES_DB}
 
