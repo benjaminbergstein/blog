@@ -13,7 +13,7 @@ SERVICE_IMAGE=${DOCKER_BASE}-${SERVICE}
 DOCKER_TAG ?= latest
 
 define DOCKER_COMPOSE
-docker-compose --project-directory ../${SERVICE} -p blog_${ENVIRONMENT}
+docker-compose -f docker-compose.${ENVIRONMENT}.yml --project-directory ../${SERVICE} -p blog_${ENVIRONMENT}
 endef
 
 define DOCKER_RUN

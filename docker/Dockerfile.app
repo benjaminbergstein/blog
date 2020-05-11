@@ -8,6 +8,8 @@ RUN yarn
 
 ADD . /app
 
+RUN yarn build
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
-CMD ["start"]
+CMD ["serve", "-H", "0.0.0.0"]

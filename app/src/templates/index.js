@@ -28,7 +28,10 @@ const BlogIndex = ({ data, location }) => {
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
+              <small>
+                {node.frontmatter.date}
+                {process.env.NODE_ENV === 'development' ? (<em> – {node.frontmatter.status}</em>) : ''}
+              </small>
             </header>
             <section>
               <p
@@ -66,6 +69,7 @@ export const pageQuery = graphql`
             category
             title
             description
+            status
           }
         }
       }

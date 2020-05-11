@@ -3,6 +3,9 @@ import Github from "typography-theme-github"
 
 Github.overrideThemeStyles = () => {
   return {
+    "td, th > p": {
+      marginBottom: '0',
+    },
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
     },

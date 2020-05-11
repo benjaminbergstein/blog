@@ -1,9 +1,9 @@
 ---
-title: Let's Dockerize! Docker development workflow with Make and Node.js
+title: Docker development workflow with Make and Node.js
 date: "2020-04-16T22:12:03.284Z"
 description: "Learn to dockerize and develop a Next.js application in this step-by-step tutorial."
 category: engineering
-status: draft
+status: published
 ---
 
 Docker is a powerful tool that is widely used today for deployment,
@@ -17,24 +17,30 @@ benefits compelling; here are a few:
 :white_check_mark: Language-agnostic.  
 :white_check_mark: Easily extended to add CI & deployment at any scale.
 
-In this tutorial, we will use the basic Next.js template to create a dockerized node.js application.
+In this tutorial, we will use the basic Next.js template to create a dockerized
+node.js application. It assumes basic knowledge of docker terms such as image
+and container, in addition to basic familiarity with node.js.
 
 ## Steps
 
-My process involves the following sets:
+My process involves the following steps:
 
-:one: Write Dockerfile and build image.  
-:two: Configure docker-compose.  
-:three: Configure Makefile
-
-## Dockerfile
+```toc
+exclude: "Steps|Bonus: Add a console target|Conclusion"
+fromHeading: 1
+toHeading: 2
+```
 
 Let's take as an example Dockerizing a project created with 
 [Next.js](https://nextjs.org).
 
-### Create Next.js app
+## :star: Create Next.js app
 
-Let's use docker to create our next.js app:
+In order to create a dockerized application, we need an application to work
+with. Let's use docker from the start, by creating our next.js app within a
+docker container:
+
+#### Create Next.js app with yarn create
 
 ```bash
 $ mkdir next-project
@@ -48,28 +54,55 @@ $ mv next-project app
 
 I used `next-project`; use the name of your project here and elsewhere.
 
-Let's break that down:
+That was a pretty intricate `docker` command. Let's take a closer look.
 
-`docker run`: Run a one-off command in a Docker image.  
-`-it`: Run the command interactively.  
-`-w /app`: Use `/app` as the working directory.  
-`-v "$(pwd):/app"`: Mount the present working directory (pwd) as a volume at /app.  
-`node:latest`: This is the docker image to use; the latest node image.  
-`yarn create next-app`: The command to run.  
-`mv next-project app`: Move the project into the app folder. This make dockerizing easier.  
++------------------------+---------------------------------+
+| Command Breakdown                                        |
++========================+=================================+
+| `docker run`           | Run a one-off command in a      |
+|                        | Docker image.                   |
++------------------------+---------------------------------+
+| `-it`                  | Run the command interactively.  |
++------------------------+---------------------------------+
+| `-w /app`              | Use `/app` as the working       |
+|                        | directory.                      |
++------------------------+---------------------------------+
+| `-v "$(pwd):/app"`     | Mount the present working       |
+|                        | directory <br/>(pwd) as a       |
+|                        | volume at /app.                 |
++------------------------+---------------------------------+
+| `node:latest`          | This is the docker image <br/>  |
+|                        | to use; the latest node image.  |
++------------------------+---------------------------------+
+| `yarn create next-app` | This is the command to run.     |
++------------------------+---------------------------------+
+| `mv next-project app`  | Move the project into the app   |
+|                        | folder. <br/> This make         |
+|                        | dockerizing easier.             |
++------------------------+---------------------------------+
 
 This leaves us with a brand new Next.js app in `./next-project/app` folder.
+Because we mounted the present working directory (pwd) as a volume, the
+filesystem changes made by `yarn create next-app` are applied to our local
+filesystem.
 
-### Write Dockerfile and build image
+Next, we'll cover how to wrap our newly created Next.js app up in our own docker
+image, and how to start a container based on that image.
 
-Our Dockerfile needs to do a few things:
+## :scroll: Write Dockerfile and build image
 
-:point_right: Add package.json and install dependencies.  
-:point_right: Add codebase.  
-:point_right: Build Next.js app.  
-:point_right: Start Next.js app.
+Writing a Dockerfile will allow us to build a fully contained image of our
+application, ready to run on any system with Docker configured. For our Next.js
+application to run within docker, our Dockerfile needs to do a few things:
+
+- Add package.json and install dependencies.
+- Add codebase.
+- Build Next.js app.
+- Start Next.js app.
 
 It looks like this:
+
+#### Dockerfile
 
 ```Dockerfile
 # ./next-project/app/Dockerfile
@@ -117,13 +150,18 @@ Great! Now stop and remove the container:
 $ docker rm -f next_project_app
 ```
 
-That's s'well! Still, it's a lot to type every time we want to build the image, or start the app.
+Excellent! Still, it's a lot to type every time we want to build the image,
+or start the app. Make targets will streamline these and other common tasks.
 
-Make targets streamline these and other common tasks.
+## :dart: Add Make targets
 
-## Adding Make targets
+Make targets will allow us to easily run common operations against our
+application, such as starting and stopping, and accessing logs. We'll also
+use `docker-compose` to configure settings on the docker container, such as port,
+volumes, and command. Let's start by writing the `docker-compose` configuration,
+so we have a container to start and stop.
 
-First, let's create a docker-compose configuration for starting and stopping our service:
+#### docker-compose.yml
 
 ```yml
 # ./next-project/docker/docker-compose.yml
@@ -143,7 +181,12 @@ services:
       - ./app:/app
 ```
 
-Now, let's add targets to build, start and stop our service. The `export` statements help remove repetition. Change `PROJECT`, for example, for your project.
+Then, we can create targets to build, start and stop our service. The `export`
+statements help remove repetition. For example, you can change `PROJECT`
+to the name of your project, and this will result in a docker image named based
+on your project's name.
+
+#### Makefile
 
 ```Makefile
 # ./next-project/docker/Makefile
@@ -171,7 +214,7 @@ stop:
 	${COMPOSE_CMD} down --remove-orphans
 ```
 
-To use them, run the following from the root of your project:
+To use these targets, run the following from the root of your project:
 
 ```bash
 $ make -C docker build start logs
@@ -196,7 +239,10 @@ And, voila! Our application is running in a docker container.
 
 ![./next-js-started.png](./next-js-started.png)
 
-### Add a console target 
+In the final section, let's examine how to access a shell within the container,
+which is usually done for debugging purposes or to run one-off commands.
+
+## Bonus: Add a console target 
 
 Because we mounted our codebase as a volume in the `docker-compose.yml` file, we 
 can edit the code of our application as if it was not dockerized. But how do we 
@@ -235,4 +281,4 @@ We can now run commands against a shell within our node.js application's docker 
 
 Dockerizing your application is just the beginning of the benefits of docker. We can also use docker to start additional services, such as relational databases, in-memory datastores, and even other applications required by our front-end Next.js application.
 
-In the future we will learn to create a backend service connected to a database with Prism.js and GraphQL.
+Future posts might cover how to create a backend service connected to a database with Prism.js and GraphQL.

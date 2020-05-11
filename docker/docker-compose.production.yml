@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  app:
+    image: ${DOCKER_BASE}-app:latest
+    ports:
+      - 14000:9000
+    environment:
+      - NODE_ENV
+
+volumes:
+  node_modules:
