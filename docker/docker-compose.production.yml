@@ -3,8 +3,13 @@ version: '3.7'
 services:
   app:
     image: ${DOCKER_BASE}-app:latest
+    ports:
+      - "14000:9000"
     environment:
+      - SERVER_PORT=9000
       - NODE_ENV
+      - SERVER_ROOT=/app/public
+      - SERVER_ASSETS=/app/public/static
     networks:
       - haproxy-controller_haproxy-controller
 

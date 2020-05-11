@@ -22,7 +22,8 @@ query PagesQuery($statuses: [String]!) {
   }
 }`
 
-const INDEXED_STATUSES = process.env.NODE_ENV === 'production' ? ["published"] : ["draft", "published"]
+const isProduction = process.env.NODE_ENV === 'production'
+const INDEXED_STATUSES = isProduction ? ["published"] : ["draft", "published"]
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -64,11 +65,13 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  const gallery = path.resolve(`./src/templates/gallery.js`)
-  createPage({
-    path: '/gallery',
-    component: gallery,
-  })
+  if (!isProduction) {
+    const gallery = path.resolve(`./src/templates/gallery.js`)
+    createPage({
+      path: '/gallery',
+      component: gallery,
+    })
+  }
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

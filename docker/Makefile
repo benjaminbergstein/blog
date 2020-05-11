@@ -24,6 +24,7 @@ include ${SERVICE}.mk
 
 build:
 	docker build ../${SERVICE} \
+		--target ${ENVIRONMENT} \
 		-f ./Dockerfile.${SERVICE} \
 		-t ${SERVICE_IMAGE}:${DOCKER_TAG}
 
