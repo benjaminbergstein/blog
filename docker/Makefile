@@ -9,12 +9,12 @@ export POSTGRES_PASSWORD=l@s3r
 export POSTGRES_DB=blog_${ENVIRONMENT}
 
 export DOCKER_REPO=registry.digitalocean.com
-export DOCKER_BASE=${DOCKER_REPO}/benbergstein/${PROJECT}
-SERVICE_IMAGE=${DOCKER_BASE}-${SERVICE}
+export DOCKER_BASE=${DOCKER_REPO}/benbergstein/${PROJECT}/${ENVIRONMENT}
+SERVICE_IMAGE=${DOCKER_BASE}/${SERVICE}
 DOCKER_TAG ?= latest
 
 define DOCKER_COMPOSE
-docker-compose -f docker-compose.${ENVIRONMENT}.yml --project-directory ../${SERVICE} -p blog_${ENVIRONMENT}
+docker-compose -f docker-compose.${ENVIRONMENT}.yml --project-directory ../${SERVICE} -p ${PROJECT}_${ENVIRONMENT}
 endef
 
 define DOCKER_RUN
