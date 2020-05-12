@@ -8,7 +8,8 @@ export POSTGRES_USER=blog
 export POSTGRES_PASSWORD=l@s3r
 export POSTGRES_DB=blog_${ENVIRONMENT}
 
-export DOCKER_BASE=benbergstein/${PROJECT}
+export DOCKER_REPO=registry.digitalocean.com
+export DOCKER_BASE=${DOCKER_REPO}/benbergstein/${PROJECT}
 SERVICE_IMAGE=${DOCKER_BASE}-${SERVICE}
 DOCKER_TAG ?= latest
 
@@ -22,11 +23,17 @@ endef
 
 include ${SERVICE}.mk
 
+authenticate:
+	doctl registry login
+
 build:
 	docker build ../${SERVICE} \
 		--target ${ENVIRONMENT} \
 		-f ./Dockerfile.${SERVICE} \
 		-t ${SERVICE_IMAGE}:${DOCKER_TAG}
+
+push:
+	docker push ${SERVICE_IMAGE}:${DOCKER_TAG}
 
 start:
 	${DOCKER_COMPOSE} up -d
@@ -43,11 +50,17 @@ console:
 attach:
 	${DOCKER_COMPOSE} exec ${SERVICE} /bin/bash
 
-pull:
+release: ENVIRONMENT=production
+release: build push
+
+deploy: ENVIRONMENT=production
+deploy: update-repo pull stop start
+
+update-repo:
 	git pull --rebase origin master
 
-release: ENVIRONMENT=production
-release: pull stop build start
+pull:
+	docker pull ${SERVICE_IMAGE}:${DOCKER_TAG}
 
 psql:
 	psql -h localhost -U ${POSTGRES_USER} ${POSTGRES_DB}
