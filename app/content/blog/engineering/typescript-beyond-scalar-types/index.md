@@ -117,7 +117,7 @@ interface Book {
 }
 ```
 
-To apply the type annotation to our Javascript with this interface:
+To apply this interface as a type annotation to our Javascript object:
 
 ```typescript
 const book: Book = {
