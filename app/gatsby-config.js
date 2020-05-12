@@ -4,7 +4,7 @@ module.exports = {
     title: `Ben Bergstein`,
     author: {
       name: `Ben Bergstein`,
-      summary: `an SF-based software engineer and home cook.`,
+      summary: `an SF-based software engineer, home cook, and hobbiest photographer.`,
     },
     description: `.`,
     social: {

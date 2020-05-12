@@ -313,6 +313,6 @@ allow the consumer of those values flexibility to name them.
 type AuthorInfo = [string, number]
 const getAuthorInfo: (author: Author) => AuthorInfo = ({ firstName, lastName, books }) => [`${lastName}, ${firstName}`, books.length]
 
-const [melvilleFullName, melvilleBooksCount]: AuthorInfo = getAuthorInfo(hm2)
+const [melvilleFullName, melvilleBooksCount]: AuthorInfo = getAuthorInfo(hermanMelville)
 const [orwellFullName, orwellBooksCount]: AuthorInfo = getAuthorInfo(georgeOrwell)
 ```
