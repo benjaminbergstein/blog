@@ -9,10 +9,11 @@ services:
       - SERVER_ROOT=/app/public
       - SERVER_ASSETS=/app/public/static
     networks:
-      - haproxy-controller_haproxy-controller
+      - default
 
 networks:
-  haproxy-controller_haproxy-controller:
+  default:
+    name: ${NETWORK}
     external: true
 
 volumes:

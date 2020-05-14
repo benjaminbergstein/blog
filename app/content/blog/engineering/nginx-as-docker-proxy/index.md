@@ -11,17 +11,17 @@ I've previously written about my
 [Docker development workflow](/engineering/docker-development-with-make/). For
 personal projects, I like to develop on a [Digital Ocean
 Droplet](https://www.digitalocean.com/products/droplets/) over SSH. This
-works well with my docker workflow, as setting up the machine to develop is as
-easy as running a make target. This during periods when I am not
+works well with my docker workflow, as I can simply run `make build start`
+to build and and start my docker containers, and I'm good to go. This during periods when I am not
 developing much, I can simply destroy the droplet.
 
-However, when building a project with multiple services, such as a React client
-with a GraphQL backend, it can become difficult to recall which service is
-running on which public port. For the sake of convenience, I've worked out a
-way to run traffic through Nginx, and use regular expressions to dynamically
-route to the appropriate container. For example, a request to
+However, when building a project with multiple services, such as a browser or mobile client
+with a separate REST or GraphQL backend, it is easiest to have hostnames that communicate
+which service is running rather than simply recalling based on port number. To that 
+end, I run all traffic on port 80 through Nginx, which uses regular expressions to
+dynamically route to the appropriate container. For example, a request to
 `http://container.8080.mydomain.com` is routed to port 8080 on a container called
-`container`.
+`container`. This allows nice browser bar completion when opening up the page.
 
 This walkthrough assumes familiarity with [docker](https://www.docker.com/)
 and [nginx](https://www.nginx.com/), and assumes you have a server running
@@ -66,6 +66,8 @@ networks:
       external: true
 ```
 
+The Makefile simplifies starting and stopping the service:
+
 #### Makefile
 
 ```Makefile
@@ -83,6 +85,8 @@ deploy-network:
 destroy-network:
 	docker network rm ${NETWORK}
 ```
+
+We'll start with a basic nginx configuration to ensure the boilerplate works correctly:
 
 #### config/nginx.conf
 
@@ -110,11 +114,11 @@ docker-compose up -d
 Creating dev-proxy_nginx_1 ... done
 ```
 
-And when we navigate to the url of our host:
+And when we navigate to the url of our host, the page looks like this:
 
 ![./hello-world.png](./hello-world.png)
 
-It works! Now we need to set up the dynamic routing.
+It works! Now we can implement the dynamic routing.
 
 ## Set up dynamic routing in Nginx config
 
@@ -152,7 +156,7 @@ index 7102663..2fbe752 100644
  }
 ```
 
-Let's take a closer look at some key lines
+Let's take a closer look at some key lines.
 
 ### Closer look
 
@@ -167,7 +171,7 @@ successfully proxying traffic to the docker containers.
 
 > `server_name   ~^(?<container>.+)\.(?<port>\d+)\..+$;`
 
-This regular expression contains two captures: container and port. These
+This regular expression contains two captures: `<container>` and `<port>`. These
 captures will be available as variables in the rest of the server configuration.
 For a  url like `foo.80.yoursite.com`, the variables will be `container=foo` and
 `port=80`.
@@ -179,8 +183,8 @@ For a  url like `foo.80.yoursite.com`, the variables will be `container=foo` and
 
 This directive tells Nginx that for this server name, proxy pass to a host using
 the variables captured earlier. For the earlier example, traffic will be passed
-to `http://foo:80`. With docker networking, this resolve to port 80 on a
-container named "foo"
+to `http://foo:80`. With docker networking, this resolves to port 80 on a
+container named `foo`.
 
 ### Restart nginx
 
@@ -203,8 +207,8 @@ Great! But we need a service on the other end to test out proxy passing.
 
 For the purposes of this post, I'll use jenkins as an example service, as there
 is a [Jenkins Docker Image](https://hub.docker.com/r/jenkins/jenkins) already
-available. I chose Jenkins because it has a frontend that we can open to test
-our proxy.
+available. Jenkins is a good example, BECause it has a frontend that we can open
+to test our proxy.
 
 #### Start Jenkins in a docker container
 
@@ -235,8 +239,8 @@ This configuration breaks out container names by service and project, for use
 with docker compose. You can add this to your nginx configuration as an
 additional `server {}` block for added flexibility.
 
-When using this pattern with docker compose, you need to remember to connect it
-to the same network. For our Jenkins example, this would look like this:
+When using this pattern with docker compose, you need to use the same docker network.
+For our Jenkins example, this would look like this:
 
 #### Sample docker-compose.yml for Jenkins
 
@@ -250,7 +254,7 @@ services:
          - nginx-proxy
 
 networks:
-   nginx-prox:
+   nginx-proxy:
       external: true
 ```
 
@@ -259,7 +263,7 @@ does not need to be created.
 
 ## Conclusion
 
-In the end, it is pretty simple to set up dynamic routing to docker containers
+It is pretty simple to set up dynamic routing to docker containers
 using the above pattern. I've found it convenient, as I can simply spin up my
 projects and quickly navigate in the browser, or configure communication between
 services. These URLs are easier to remember than simply the domain name and a

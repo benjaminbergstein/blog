@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   app:
-    image: ${DOCKER_BASE}-app:latest
+    image: ${DOCKER_BASE}/app:latest
     ports:
       - ${PORT}:${PORT}
     command: ["develop"]

@@ -4,9 +4,7 @@ export NODE_ENV ?= ${ENVIRONMENT}
 export SERVICE ?= app
 export PORT ?= 14000
 
-export POSTGRES_USER=blog
-export POSTGRES_PASSWORD=l@s3r
-export POSTGRES_DB=blog_${ENVIRONMENT}
+export NETWORK ?= haproxy-controller_haproxy-controller
 
 export DOCKER_REPO=registry.digitalocean.com
 export DOCKER_BASE=${DOCKER_REPO}/benbergstein/${PROJECT}/${ENVIRONMENT}
