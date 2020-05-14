@@ -1,7 +1,7 @@
 ---
 title: "Typescript Primer"
 date: "2020-05-08T00:12:03.284Z"
-description: "Learn how to create and use your own types in Typescript."
+description: "A list of things I wish I'd known sooner about Typescript"
 category: engineering
 status: published
 ---
