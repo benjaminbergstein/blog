@@ -1,0 +1,75 @@
+.swiper-button-prev, .swiper-button-next {
+  background: #eaeaea;
+  border-radius: 100%;
+  color: black;
+  width: 2.25em;
+  height: 2.2em;
+  outline: 0;
+  display: flex;
+  font-size: 1em;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 5px -2px #333;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+  font-size: 0.8em;
+  font-weight: 900;
+  color: #666;
+}
+
+.swiper-button-next:after {
+  transform: translateX(1.5px)
+}
+
+.swiper-button-prev:after {
+  transform: translateX(-1.5px)
+}
+
+.portfolio__wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.portfolio__photo {
+  width: 32%;
+}
+
+.portfolio__title {
+  color: black;
+  border: none;
+  padding: 0.5em 0.5em 0;
+  margin: 0;
+}
+
+.portfolio__note {
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  text-shadow: 0 0 1px #eaeaea;
+  font-weight: 600;
+}
+
+.portfolio__focus__wrapper {
+  background: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (orientation: portrait) {
+  .portfolio__focus__image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (orientation: landscape) {
+  .portfolio__focus__image {
+    width: auto;
+    height: 100%;
+  }
+}

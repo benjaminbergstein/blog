@@ -8,6 +8,7 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
+import styles from './bio.css'
 
 import { rhythm } from "../utils/typography"
 
@@ -37,31 +38,40 @@ const Bio = () => {
 
   const { author, social } = data.site.siteMetadata
   return (
-    <div
-      style={{
-        display: `flex`,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: rhythm(1.5),
-      }}
-    >
-      <Image
-        fixed={data.avatar.childImageSharp.fixed}
-        alt={author.name}
+    <>
+      <div className="links">
+        <a target="_BLANK" href="https://www.github.com/benjaminbergstein">Projects</a>
+        <span>·</span>
+        <a href="/photography">Photography</a>
+        <span>·</span>
+        <a target="_BLANK" href="https://docs.google.com/forms/d/e/1FAIpQLSfPjEFoV3emlpjvMMvXtmaBAwLdXZX4syho9ch7U1YK4n92Uw/viewform">Contact</a>
+      </div>
+      <div
         style={{
-          marginRight: rhythm(1),
-          marginBottom: '0px',
-          minWidth: 50,
-          borderRadius: `100%`,
+          display: `flex`,
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: rhythm(1.5),
         }}
-        imgStyle={{
-          borderRadius: `50%`,
-        }}
-      />
-      <p style={{ margin: 0 }}>
-        {author.name} is {author.summary}
-      </p>
-    </div>
+      >
+        <Image
+          fixed={data.avatar.childImageSharp.fixed}
+          alt={author.name}
+          style={{
+            marginRight: rhythm(1),
+            marginBottom: '0px',
+            minWidth: 50,
+            borderRadius: `100%`,
+          }}
+          imgStyle={{
+            borderRadius: `50%`,
+          }}
+        />
+        <p style={{ margin: 0 }}>
+          {author.name} is {author.summary}
+        </p>
+      </div>
+    </>
   )
 }
 

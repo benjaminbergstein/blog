@@ -65,6 +65,12 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  const portfolio = path.resolve(`./src/templates/portfolio.js`)
+  createPage({
+    path: '/photography',
+    component: portfolio,
+  })
+
   if (!isProduction) {
     const gallery = path.resolve(`./src/templates/gallery.js`)
     createPage({

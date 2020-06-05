@@ -1,0 +1,14 @@
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto 1em;
+}
+
+@media (max-width: 460px) {
+  .links {
+    width: 100%;
+  }
+}
