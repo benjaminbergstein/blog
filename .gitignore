@@ -5,3 +5,5 @@ server/node_modules
 data/photos
 app/content/assets/photos
 app/content/assets/portfolio
+wrangler.toml
+secrets.mk

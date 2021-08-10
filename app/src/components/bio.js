@@ -44,7 +44,7 @@ const Bio = () => {
         <span>·</span>
         <a href="/photography">Photography</a>
         <span>·</span>
-        <a target="_BLANK" href="https://docs.google.com/forms/d/e/1FAIpQLSfPjEFoV3emlpjvMMvXtmaBAwLdXZX4syho9ch7U1YK4n92Uw/viewform">Contact</a>
+        <a target="_BLANK" href="https://www.instagram.com/benjbergstein">Instagram</a>
       </div>
       <div
         style={{

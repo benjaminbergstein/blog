@@ -80,7 +80,7 @@ export const portfolioQuery = graphql`
   query PortfolioQuery {
     allFile(
       filter: { absolutePath: { regex: "/portfolio.+JPG/" } }
-      sort: { fields: [absolutePath], order: ASC }
+      sort: { fields: [absolutePath], order: DESC }
     ) {
       edges {
 	node {
