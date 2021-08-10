@@ -2,7 +2,8 @@
 title: "Reusable low-level React components using styled-components, and
 styled-system, and Typescript"
 date: "2020-06-03T00:12:03.284Z"
-description: ""
+description: "A tutorial on React component composition and style systems"
+tags: ["react", "design-systems", "styled-components", "styled-system", "typescript", "tutorials"]
 category: engineering
 status: published
 ---

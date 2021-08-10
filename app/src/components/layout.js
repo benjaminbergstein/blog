@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
+import { ViewportProvider } from '../hooks/useViewport'
 
 import { rhythm, scale } from "../utils/typography"
 
@@ -50,20 +51,22 @@ const Layout = ({ location, title, children, isFull }) => {
     )
   }
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: isFull ? "100%" : rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{header}</header>
-      <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()} Benjamin Bergstein
-      </footer>
-    </div>
+    <ViewportProvider>
+      <div
+        style={{
+          marginLeft: `auto`,
+          marginRight: `auto`,
+          maxWidth: isFull ? "100%" : rhythm(24),
+          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
+        }}
+      >
+        <header>{header}</header>
+        <main>{children}</main>
+        <footer>
+          © 2020 - {new Date().getFullYear()} Benjamin Bergstein
+        </footer>
+      </div>
+    </ViewportProvider>
   )
 }
 

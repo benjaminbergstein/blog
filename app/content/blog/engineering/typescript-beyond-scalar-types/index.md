@@ -3,6 +3,7 @@ title: "Typescript Primer"
 date: "2020-05-08T00:12:03.284Z"
 description: "A list of things I wish I'd known sooner about Typescript"
 category: engineering
+tags: ["typescript", "tutorials", "learn to code", "typing", "javascript"]
 status: published
 ---
 

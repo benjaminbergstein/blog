@@ -1,8 +1,9 @@
 ---
 title: "Typescript Generics: Writing a node-fetch wrapper"
 date: "2021-08-07T00:12:03.284Z"
-description: "Diving into one the type system's more opaque features."
+description: "Tutorial diving into one the type system's more opaque features."
 category: engineering
+tags: ["typescript", "tutorials", "learn to code", "typing", "javascript"]
 status: published
 ---
 
@@ -10,13 +11,13 @@ status: published
 
 For most use cases, built-in and custom types serve the needs of Typescript
 developers. However, at some point in any sufficiently complex codebase,
-abstractions are necessary. But how to type abstract or reusable functions? We
-can use generic types, of course!
+abstractions are necessary. But how to type abstract or reusable functions? In
+this tutorial, we will learn to use generic types to do just that!
 
-## Contents
+## Tutorial
 
 ```toc
-exclude: Contents|Background
+exclude: Tutorial|Background
 fromHeading: 1
 toHeading: 2
 ```

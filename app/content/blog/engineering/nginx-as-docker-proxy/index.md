@@ -4,6 +4,7 @@ date: "2020-05-13T22:12:03.284Z"
 description: "Access docker containers over the public internet by using Nginx
 to dynamically route HTTP requests"
 category: engineering
+tags: ["nginx", "tutorials", "docker"]
 status: published
 ---
 
@@ -23,7 +24,7 @@ dynamically route to the appropriate container. For example, a request to
 `http://container.8080.mydomain.com` is routed to port 8080 on a container called
 `container`. This allows nice browser bar completion when opening up the page.
 
-This walkthrough assumes familiarity with [docker](https://www.docker.com/)
+This tutorial familiarity with [docker](https://www.docker.com/)
 and [nginx](https://www.nginx.com/), and assumes you have a server running
 with DNS records configured for `*.yourdomain.com`.
 
