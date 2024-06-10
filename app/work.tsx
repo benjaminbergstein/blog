@@ -11,9 +11,7 @@ export default function Home() {
       <div className="text-red-50 text-justify text-[4rem] tracking-[3px] leading-[1.75em]">
         <Orange>Benjamin Bergstein is</Orange> a lot of things
         <Star />
-        <Orange>He is</Orange> a polytalented autodidact, a year-of-the-dragon
-        Aries, a semi-nomadic Jew, an American man, and a Resident of San
-        Francisco
+        <Orange>He</Orange> works and plays.
         <Star />
         <Orange>He eats</Orange> his dang vegetables and sometimes, when he
         wants to, he eats animals parts too.
