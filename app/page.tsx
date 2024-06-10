@@ -1,43 +1,53 @@
 import { FC, PropsWithChildren } from "react";
 
-const Star = () => <span className="text-blue-200"> ❖ </span>;
+const Star = () => <span className="text-blue-200 text-[0.5em]"> ❖ </span>;
 const Orange: FC<PropsWithChildren> = ({ children }) => (
   <span className="text-orange-100">{children}</span>
 );
 export default function Home() {
   return (
     <div className="relative py-[5vw] px-[5vw] min-h-screen bg-red-950 gap-[100px] flex flex-col">
-      <div className="text-red-200 text-[4vw] text-center">👋</div>
-      <div className="text-red-50 text-justify text-[4rem] tracking-[3px] leading-[1.75em]">
-        <Orange>Benjamin Bergstein is</Orange> a lot of things
+      <div className="text-red-200 text-[10vw] text-center">👋</div>
+      <div className="text-red-50 text-justify uppercase font-normal text-[2rem] tracking-[2px] leading-[1.5em] flex items-center flex-wrap gap-x-[1em]">
+        <Orange><span className="font-extrabold">Benjamin Bergstein</span></Orange>
         <Star />
-        <Orange>He is</Orange> a polytalented autodidact, a year-of-the-dragon
-        Aries, a semi-nomadic Jew, an American man, and a Resident of San
-        Francisco
+        <Orange>is</Orange>
         <Star />
-        <Orange>He eats</Orange> his dang vegetables and sometimes, when he
-        wants to, he eats animals parts too.
+        <Orange>a</Orange>
         <Star />
-        <Orange>His current</Orange> professional role is as Founding Engineer
-        at{" "}
-        <a
-          href="litlab"
-          className="text-sky-50 hover:text-sky-200 transition-all hover:translate-y-1"
-        >
-          LitLab.ai
-        </a>{" "}
+        <Orange>Software Consultant</Orange>
         <Star />
-        <Orange>He is</Orange> a highly-effective remote worker best experienced
-        face-to-face
+        <Orange>Photographer</Orange>
         <Star />
-        <Orange>He is</Orange> open to remote and on-site consulting engagements
-        that demand an individual contributor with wide-ranging skills, tools
-        and perspective.
+        <Orange>humerous</Orange>
         <Star />
-        <Orange>He is</Orange> one of many one-of-kind people.
+        <Orange>cook</Orange>
         <Star />
-        <span className="text-lime-100">See you out there&hellip;</span>
-        <span className="absolute right-[5vw]">🛣️</span>
+        <Orange>eccentric</Orange>
+        <Star />
+        <Orange>Outdoor enthusiast</Orange>
+        <Star />
+        <Orange>work in progress</Orange>
+        <Star />
+        <Orange>American-born</Orange>
+        <Star />
+        <Orange>aries</Orange>
+        <Star />
+        <Orange>of Jewish origin</Orange>
+        <Star />
+        <Orange>who</Orange>
+        <Star />
+        <Orange>likes animals</Orange>
+        <Star />
+        <Orange>people</Orange>
+        <Star />
+        <Orange>plants</Orange>
+        <Star />
+        <Orange>and</Orange>
+        <Star />
+        <Orange>resists definition</Orange>
+        <Star />
+        <Orange><a href="mailto:info@thebenbergstein.com" className="hover:border-b-4 transition-all hover:translate-y-[-2px] hover:border-pink-400 text-pink-400 bg-slate-100 px-2">inquiries</a></Orange>
       </div>
     </div>
   );
